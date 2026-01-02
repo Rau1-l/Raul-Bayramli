@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>RAUL</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;900&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --core: #ffffff;
+            --accent: #00ffaa;
+            --deep: #000000;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: var(--deep);
+            color: var(--core);
+            font-family: 'Unbounded', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            perspective: 1000px;
+        }
+
+        #canvas-container { position: fixed; inset: 0; z-index: -1; }
+
+        /* ИНТЕРФЕЙС БУДУЩЕГО */
+        .trillion-ui {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: env(safe-area-inset-top) 30px env(safe-area-inset-bottom);
+            z-index: 10;
+        }
+
+        .header-system {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .data-stream {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 0.6rem;
+            letter-spacing: 3px;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        /* ЦЕНТРАЛЬНЫЙ УЗЕЛ */
+        .hero-unit {
+            text-align: center;
+        }
+
+        .hero-unit h1 {
+            font-size: clamp(3rem, 15vw, 10rem);
+            font-weight: 900;
+            line-height: 0.8;
+            text-transform: uppercase;
+            background: linear-gradient(180deg, #fff 0%, rgba(255,255,255,0) 150%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 50px rgba(0,255,170,0.3));
+        }
+
+        .role-tag {
+            font-size: 0.8rem;
+            letter-spacing: 10px;
+            margin-top: 20px;
+            color: var(--accent);
+        }
+
+        /* ТЕЛЕФОННЫЙ ИНТЕРФЕЙС (Bento 3.0) */
+        .bento-box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            max-width: 500px;
+            margin: 40px auto;
+        }
+
+        .tile {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 30px;
+            backdrop-filter: blur(30px);
+            transition: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .tile i { font-size: 1.5rem; margin-bottom: 15px; color: var(--accent); }
+        .tile h3 { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* СОЦСЕТИ: КВАНТОВЫЙ ХАБ */
+        .social-hub {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding-bottom: 40px;
+        }
+
+        .hub-btn {
+            width: 70px; height: 70px;
+            border-radius: 24px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            text-decoration: none;
+            font-size: 1.8rem;
+            transition: 0.4s;
+        }
+
+        .hub-btn:hover {
+            transform: translateY(-10px) rotate(10deg);
+            background: var(--accent);
+            box-shadow: 0 20px 40px rgba(0,255,170,0.4);
+        }
+
+        /* АНИМАЦИЯ ЛИНИИ ЖИЗНИ */
+        .life-line {
+            position: fixed;
+            left: 0; top: 50%;
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.2;
+        }
+
+        @media (max-width: 768px) {
+            .hero-unit h1 { font-size: 18vw; }
+            .bento-box { padding: 0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="life-line"></div>
+    <div id="canvas-container"></div>
+
+    <div class="trillion-ui">
+        <header class="header-system">
+            <div class="data-stream">System: Online // Raul_v1.0</div>
+
+        </header>
+
+        <main class="hero-unit">
+            <h1>RAUL</h1>
+            <p class="role-tag">Digital Architect</p>
+
+            <div class="bento-box">
+                <div class="tile">
+                    <i class="fas fa-terminal"></i>
+                    <h3>Code</h3>
+                </div>
+                <div class="tile">
+                    <i class="fas fa-futbol"></i>
+                    <h3>Striker</h3>
+                </div>
+                <div class="tile" style="grid-column: span 2;">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Game Design Mastery</h3>
+                </div>
+            </div>
+        </main>
+
+        <footer class="social-hub">
+            <a href="https://www.instagram.com/raul.b_100/" target="_blank" class="hub-btn">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://t.me/raulb_100" target="_blank" class="hub-btn">
+                <i class="fab fa-telegram-plane"></i>
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // THREE.JS КВАНТОВОЕ ЯДРО
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+        // Создаем "Сингулярность" (Анимированная сфера данных)
+        const geometry = new THREE.SphereGeometry(200, 64, 64);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: 0x00ffaa, 
+            wireframe: true,
+            transparent: true,
+            opacity: 0.1
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Добавляем частицы
+        const pGeo = new THREE.BufferGeometry();
+        const pCount = 5000;
+        const pPos = new Float32Array(pCount * 3);
+        for(let i=0; i<pCount*3; i++) pPos[i] = (Math.random() - 0.5) * 1500;
+        pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+        const pMat = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+        const points = new THREE.Points(pGeo, pMat);
+        scene.add(points);
+
+        camera.position.z = 500;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.y += 0.002;
+            sphere.rotation.x += 0.001;
+            points.rotation.y -= 0.0005;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // ИНТЕРАКТИВ НА ТЕЛЕФОНЕ
+        window.addEventListener('touchmove', (e) => {
+            const x = e.touches[0].clientX / window.innerWidth - 0.5;
+            const y = e.touches[0].clientY / window.innerHeight - 0.5;
+            gsap.to(sphere.rotation, { x: y * 2, y: x * 2, duration: 1.5 });
+        });
+
+        // Плавное появление элементов
+        gsap.from(".tile", { 
+            scale: 0, 
+            opacity: 0, 
+            duration: 1, 
+            stagger: 0.1, 
+            ease: "expo.out" 
+        });
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
